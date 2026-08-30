@@ -153,7 +153,7 @@ class NetworkSession{
 	private const INCOMING_GAME_PACKETS_PER_TICK = 2;
 	private const INCOMING_GAME_PACKETS_BUFFER_TICKS = 100;
 
-	private const INCOMING_PACKET_BATCH_HARD_LIMIT = 300;
+	private const INCOMING_PACKET_BATCH_HARD_LIMIT = 1500;
 
 	private const LOGIN_TIMEOUT_SECONDS = 10;
 
