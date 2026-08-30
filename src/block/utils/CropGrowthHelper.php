@@ -31,14 +31,16 @@ use function mt_rand;
 
 final class CropGrowthHelper{
 
-	private const ON_HYDRATED_FARMLAND_BONUS = 3;
-	private const ON_DRY_FARMLAND_BONUS = 1;
-	private const ADJACENT_HYDRATED_FARMLAND_BONUS = 3 / 4;
-	private const ADJACENT_DRY_FARMLAND_BONUS = 1 / 4;
+	private const ON_HYDRATED_FARMLAND_BONUS = 12;
+	private const ON_DRY_FARMLAND_BONUS = 6;
+	private const ADJACENT_HYDRATED_FARMLAND_BONUS = 0.3;
+	private const ADJACENT_DRY_FARMLAND_BONUS = 0.15;
 
-	private const IMPROPER_ARRANGEMENT_DIVISOR = 2;
+	private const IMPROPER_ARRANGEMENT_DIVISOR = 1.5;
 
 	private const MIN_LIGHT_LEVEL = 9;
+	
+	private const GROWTH_RADIUS = 5;
 
 	private function __construct(){
 		//NOOP
@@ -46,7 +48,7 @@ final class CropGrowthHelper{
 
 	/**
 	 * Returns the speed at which this crop will grow, depending on its surroundings.
-	 * The default is once every 26 random ticks.
+	 * The default is once every 26 random ticks (now much faster with buffed bonuses).
 	 *
 	 * Things which influence this include nearby farmland (bonus for hydrated farmland) and the position of other
 	 * nearby crops of the same type (nearby crops of the same type will negatively influence growth speed unless
@@ -72,8 +74,9 @@ final class CropGrowthHelper{
 		$zRow = false;
 		$improperArrangement = false;
 
-		for($x = -1; $x <= 1; $x++){
-			for($z = -1; $z <= 1; $z++){
+		// increase radius from 1 to 5 for better growth bonuses in AFK farms
+		for($x = -self::GROWTH_RADIUS; $x <= self::GROWTH_RADIUS; $x++){
+			for($z = -self::GROWTH_RADIUS; $z <= self::GROWTH_RADIUS; $z++){
 				if($x === 0 && $z === 0){
 					continue;
 				}
